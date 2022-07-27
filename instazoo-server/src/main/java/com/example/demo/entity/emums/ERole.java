@@ -1,4 +1,4 @@
-package com.example.demo.entity;
+package com.example.demo.entity.emums;
 
 public enum ERole {
     ROLE_USER,
