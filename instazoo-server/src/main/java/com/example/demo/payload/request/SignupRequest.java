@@ -1,5 +1,6 @@
 package com.example.demo.payload.request;
 
+import com.example.demo.annotations.ValidEmail;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
@@ -10,6 +11,7 @@ public class SignupRequest {
 
     @Email(message = "It should have email format")
     @NotBlank(message = "User email is required")
+    @ValidEmail
     private String email;
     @NotBlank(message = "Please enter your name")
     private String firstname;
