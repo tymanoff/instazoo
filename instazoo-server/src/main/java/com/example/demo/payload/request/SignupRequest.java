@@ -1,12 +1,15 @@
 package com.example.demo.payload.request;
 
+import com.example.demo.annotations.PasswordMatches;
 import com.example.demo.annotations.ValidEmail;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Data
+@PasswordMatches
 public class SignupRequest {
 
     @Email(message = "It should have email format")
@@ -20,6 +23,7 @@ public class SignupRequest {
     @NotBlank(message = "Please enter your username")
     private String username;
     @NotBlank(message = "Password is required")
+    @Size(min = 6)
     private String password;
     private String confirmPassword;
 
