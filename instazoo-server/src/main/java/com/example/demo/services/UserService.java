@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.dto.UserDTO;
 import com.example.demo.entity.emums.ERole;
 import com.example.demo.exceptions.UserExistException;
 import com.example.demo.repository.UserRepository;
@@ -8,8 +9,11 @@ import com.example.demo.payload.request.SignupRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.security.Principal;
 
 @Service
 public class UserService {
@@ -41,4 +45,24 @@ public class UserService {
             throw new UserExistException("The user " + user.getUsername() + " already exist. Please check credentials");
         }
     }
+
+    public User updateUser(UserDTO userDTD, Principal principal){
+        User user = getUserByPrincipal(principal);
+        user.setName(userDTD.getFirstname());
+        user.setLastname(userDTD.getLastname());
+        user.setBio(userDTD.getBio());
+
+        return userRepository.save(user);
+    }
+
+    public User getCurrentUser(Principal principal){
+        return getUserByPrincipal(principal);
+    }
+
+    private User getUserByPrincipal(Principal principal){
+        String username = principal.getName();
+        return userRepository.findUserByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Username not found with username " + username));
+    }
+
 }
