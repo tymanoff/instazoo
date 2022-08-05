@@ -3,7 +3,7 @@ package com.example.demo.services;
 import com.example.demo.entity.ImageModel;
 import com.example.demo.entity.Post;
 import com.example.demo.entity.User;
-import com.example.demo.exceptions.ImageNotFoundExceprion;
+import com.example.demo.exceptions.ImageNotFoundException;
 import com.example.demo.repository.ImageRepository;
 import com.example.demo.repository.PostRepository;
 import com.example.demo.repository.UserRepository;
@@ -102,7 +102,7 @@ public class ImageUploadService {
 
     public ImageModel getImageToPost(Long postId) {
         ImageModel imageModel = imageRepository.findByPostId(postId)
-                .orElseThrow(() -> new ImageNotFoundExceprion("Cannot find image to Post: " + postId));
+                .orElseThrow(() -> new ImageNotFoundException("Cannot find image to Post: " + postId));
         if (!ObjectUtils.isEmpty(imageModel)) {
             imageModel.setImageBytes(decompressBytes(imageModel.getImageBytes()));
         }
