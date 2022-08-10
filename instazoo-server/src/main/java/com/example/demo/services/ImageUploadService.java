@@ -58,7 +58,7 @@ public class ImageUploadService {
 
     public ImageModel uploadImageToUser(MultipartFile file, Principal principal) throws IOException {
         User user = getUserByPrincipal(principal);
-        LOG.error("Uploading image profile to User {}", user.getUsername());
+        LOG.info("Uploading image profile to User {}", user.getUsername());
 
         ImageModel userProfileImage = imageRepository.findByUserId(user.getId()).orElse(null);
         if (!ObjectUtils.isEmpty(userProfileImage)) {
